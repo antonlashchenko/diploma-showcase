@@ -1,16 +1,18 @@
-// Шлях: app/product/[slug]/page.js
+// Шлях: app/item/[productId]/page.js
 // Це Серверний Компонент
 
-// 1. БЕЗПЕЧНО імпортуємо дані (з 'fs')
+// 1. Шляхи тепер на 3 рівні вгору
 import { getProductById, getCategories } from '../../../lib/data';
 import ProductView from '../../../components/ProductView';
 
+// 2. 'params' тепер буде містити { productId: '1' }
 export default function ProductPage({ params }) {
   
-  // 2. БЕЗПЕЧНО отримуємо продукт І категорії на сервері
-  const product = getProductById(params.slug);
+  // 3. Отримуємо продукт за 'params.productId'
+  const product = getProductById(params.productId);
   const categories = getCategories();
 
+  // 4. Якщо товар не знайдено
   if (!product) {
      return (
        <main className="flex min-h-screen flex-col items-center">
@@ -19,12 +21,13 @@ export default function ProductPage({ params }) {
             &larr; Назад до каталогу
           </a>
         </header>
-        <p className="p-10 text-center text-red-500">Товар не знайдено. (SLUG: {params.slug})</p>
+        {/* Нове повідомлення для налагодження */}
+        <p className="p-10 text-center text-red-500">Товар не знайдено. (ID: {params.productId})</p>
       </main>
     );
   }
 
-  // 3. Передаємо продукт І категорії у Клієнтський Компонент
+  // 5. Передаємо продукт і категорії
   return (
     <ProductView product={product} categories={categories} />
   );

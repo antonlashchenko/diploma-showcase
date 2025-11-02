@@ -3,9 +3,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Header from './Header'; // Відносний шлях
+import Header from './Header'; 
 
-// 1. Отримуємо 'products' ТА 'categories'
 export default function Storefront({ products, categories }) { 
   const [selectedCategory, setSelectedCategory] = useState("Всі");
   
@@ -17,7 +16,6 @@ export default function Storefront({ products, categories }) {
   
   return (
     <>
-      {/* 2. Передаємо 'categories' у Хедер */}
       <Header 
         categories={categories} 
         onSelectCategory={setSelectedCategory} 
@@ -38,8 +36,9 @@ export default function Storefront({ products, categories }) {
                 <p className="text-gray-500 text-sm">{product.category}</p>
                 <p className="text-xl font-bold text-blue-600 mt-2">${product.price}</p>
                 
+                {/* ↓↓ ЗМІНА ТУТ: Оновлений шлях посилання ↓↓ */}
                 <Link 
-                  href={`/product/${product.id}`} 
+                  href={`/item/${product.id}`} 
                   className="mt-4 text-center bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 w-full"
                 >
                   Детальніше
