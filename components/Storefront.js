@@ -2,7 +2,8 @@
 "use client";
 
 import { useState } from 'react';
-// ↓↓ КРОК 1: Ми ВИДАЛИЛИ 'import Link from 'next/link';' ↓↓
+// ↓↓ КРОК 1: ПОВЕРТАЄМО 'import Link' ↓↓
+import Link from 'next/link';
 import Header from './Header'; 
 
 export default function Storefront({ products, categories }) { 
@@ -36,14 +37,13 @@ export default function Storefront({ products, categories }) {
                 <p className="text-gray-500 text-sm">{product.category}</p>
                 <p className="text-xl font-bold text-blue-600 mt-2">${product.price}</p>
                 
-                {/* ↓↓ КРОК 2: Ми замінили <Link> на звичайний <a> ↓↓ */}
-                {/* Це змусить сторінку повністю перезавантажитись */}
-                <a 
+                {/* ↓↓ КРОК 2: ПОВЕРТАЄМО <Link> (це правильний спосіб) ↓↓ */}
+                <Link 
                   href={`/item/${product.id}`} 
                   className="mt-4 text-center bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 w-full"
                 >
                   Детальніше
-                </a>
+                </Link>
               </div>
             </div>
           ))}
