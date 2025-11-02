@@ -1,22 +1,19 @@
 // Шлях: app/product/[slug]/page.js
-// НЕМАЄ "use client" - це Серверний Компонент
+// Це Серверний Компонент
 
 // 1. БЕЗПЕЧНО імпортуємо дані (з 'fs')
-import { getProductById } from '../../../lib/data';
-// 2. Імпортуємо наш НОВИЙ клієнтський компонент
-import ProductView from '../../../components/ProductView'; 
+import { getProductById, getCategories } from '../../../lib/data';
+import ProductView from '../../../components/ProductView';
 
 export default function ProductPage({ params }) {
   
-  // 3. БЕЗПЕЧНО отримуємо продукт на сервері
+  // 2. БЕЗПЕЧНО отримуємо продукт І категорії на сервері
   const product = getProductById(params.slug);
+  const categories = getCategories();
 
-  // 4. Якщо товар не знайдено
   if (!product) {
-    return (
-      <main className="flex min-h-screen flex-col items-center">
-        {/* Ми не можемо показати Хедер тут, бо він клієнтський,
-            але можемо показати посилання "Назад" */}
+     return (
+       <main className="flex min-h-screen flex-col items-center">
          <header className="w-full p-4 bg-blue-600 text-white shadow-md">
           <a href="/" className="text-2xl font-bold hover:underline">
             &larr; Назад до каталогу
@@ -27,8 +24,8 @@ export default function ProductPage({ params }) {
     );
   }
 
-  // 5. Передаємо продукт у Клієнтський Компонент
+  // 3. Передаємо продукт І категорії у Клієнтський Компонент
   return (
-    <ProductView product={product} />
+    <ProductView product={product} categories={categories} />
   );
 }

@@ -1,17 +1,18 @@
 // Шлях: app/page.js
-// НЕМАЄ "use client" - це тепер Серверний Компонент
+// Це Серверний Компонент
 
-import { getAllProducts } from '../lib/data'; // Імпортуємо дані (з 'fs')
-import Storefront from '../components/Storefront'; // Наш НОВИЙ клієнтський компонент
+// 1. Імпортуємо ОБИДВІ функції
+import { getAllProducts, getCategories } from '../lib/data';
+import Storefront from '../components/Storefront'; // Наш клієнтський компонент
 
-// 1. Ця сторінка тепер "Server-Side"
 export default function Home() {
   
-  // 2. Вона БЕЗПЕЧНО завантажує дані з Excel на сервері
+  // 2. БЕЗПЕЧНО завантажуємо обидва набори даних на сервері
   const allProducts = getAllProducts();
+  const allCategories = getCategories();
   
-  // 3. І просто передає ці дані у Клієнтський Компонент
+  // 3. І передаємо обидва у Клієнтський Компонент
   return (
-    <Storefront products={allProducts} />
+    <Storefront products={allProducts} categories={allCategories} />
   );
 }

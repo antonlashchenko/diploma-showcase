@@ -1,14 +1,14 @@
 // Шлях: components/Storefront.js
-"use client"; // ← ЦЕ КЛІЄНТСЬКИЙ КОМПОНЕНТ
+"use client";
 
 import { useState } from 'react';
 import Link from 'next/link';
 import Header from './Header'; // Відносний шлях
 
-export default function Storefront({ products }) { // 1. Отримуємо товари
+// 1. Отримуємо 'products' ТА 'categories'
+export default function Storefront({ products, categories }) { 
   const [selectedCategory, setSelectedCategory] = useState("Всі");
   
-  // 2. Використовуємо 'products', які прийшли з сервера
   const allProducts = products; 
 
   const filteredProducts = selectedCategory === "Всі"
@@ -17,8 +17,11 @@ export default function Storefront({ products }) { // 1. Отримуємо то
   
   return (
     <>
-      {/* 3. Вся інтерактивна логіка тепер тут */}
-      <Header onSelectCategory={setSelectedCategory} />
+      {/* 2. Передаємо 'categories' у Хедер */}
+      <Header 
+        categories={categories} 
+        onSelectCategory={setSelectedCategory} 
+      />
       
       <main className="container mx-auto px-6 py-8">
         <h2 className="text-3xl font-bold text-gray-800 mb-6">

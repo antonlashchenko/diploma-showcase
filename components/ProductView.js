@@ -1,24 +1,26 @@
 // Шлях: components/ProductView.js
-"use client"; // ← ЦЕ КЛІЄНТСЬКИЙ КОМПОНЕНТ
+"use client";
 
 import { useCart } from '../context/CartContext';
-import ARViewer from './ARViewer'; // Відносний шлях
-import Header from './Header'; // Відносний шлях
+import ARViewer from './ARViewer'; 
+import Header from './Header'; 
 import { useState } from 'react';
 
-// 1. Отримуємо 'product' з серверної сторінки
-export default function ProductView({ product }) {
+// 1. Отримуємо 'product' ТА 'categories'
+export default function ProductView({ product, categories }) {
   const { addToCart } = useCart();
   
-  // Цей стан тут потрібен, щоб Хедер працював
   const [_, setSelectedCategory] = useState("Всі");
   
   const showAR = !!product.arModel;
 
   return (
     <>
-      {/* 2. Вся інтерактивна логіка тепер тут */}
-      <Header onSelectCategory={setSelectedCategory} />
+      {/* 2. Передаємо 'categories' у Хедер */}
+      <Header 
+        categories={categories} 
+        onSelectCategory={setSelectedCategory} 
+      />
       
       <main className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
