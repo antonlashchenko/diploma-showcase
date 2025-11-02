@@ -2,10 +2,18 @@
 "use client"; 
 
 import { useState, useEffect } from 'react';
+// ↓↓ 1. Імпортуємо шрифт Inter ↓↓
+import { Inter } from 'next/font/google';
 import "./globals.css"; 
 import { CartProvider } from "../context/CartContext"; 
 import CookieBanner from '../components/CookieBanner'; 
 import Footer from '../components/Footer'; 
+
+// 2. Налаштовуємо шрифт
+const inter = Inter({
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-inter', // Назва для CSS
+});
 
 export default function RootLayout({ children }) {
   
@@ -23,15 +31,17 @@ export default function RootLayout({ children }) {
   };
   
   return (
-    <html lang="uk">
+    // 3. Застосовуємо шрифт до всього сайту
+    <html lang="uk" className={inter.variable}>
       <head>
-        <title>Minimalist Shop</title>
+        {/* 4. Змінюємо назву */}
+        <title>spacia.ua</title>
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>
       
       <CartProvider>
-        <body className="flex flex-col min-h-screen bg-gray-50">
+        <body className="flex flex-col min-h-screen">
           
           <div className="flex-grow">
             {children}
@@ -41,7 +51,6 @@ export default function RootLayout({ children }) {
           
           {showCookie && <CookieBanner onAccept={handleAcceptCookie} />}
           
-          {/* Tidio (якщо він вам ще потрібен) */}
           <script src="//code.tidio.co/txssd0zgjsqnoyz0lrzkg0w5utbdipc9.js" async></script>
         </body>
       </CartProvider>

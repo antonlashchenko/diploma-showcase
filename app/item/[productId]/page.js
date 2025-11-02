@@ -5,13 +5,8 @@ import { useParams } from 'next/navigation';
 import { useCart } from '../../../context/CartContext';
 import ARViewer from '../../../components/ARViewer';
 import Header from '../../../components/Header';
-import { useState } from 'react'; // 'useEffect' нам більше не потрібен
-
-// ↓↓ КРОК 1: ІМПОРТУЄМО ВАШУ ВЛАСНУ ФУНКЦІЮ ПОШУКУ ↓↓
+import { useState } from 'react';
 import { getProductById } from '../../../lib/data';
-
-// "БД" для AR-моделей нам більше не потрібна,
-// оскільки шлях до моделі тепер у 'product.arModel'
 
 export default function ProductPage() {
   const params = useParams(); 
@@ -19,11 +14,7 @@ export default function ProductPage() {
   
   const { addToCart } = useCart();
   const [_, setSelectedCategory] = useState("Всі");
-
-  // ↓↓ КРОК 2: ПРИБИРАЄМО 'useEffect' і 'fetch' ↓↓
-  // Просто отримуємо товар прямо з нашого файлу
   const product = getProductById(id);
-  // 'isLoading' нам більше не потрібен
 
   if (!product) {
     return (
@@ -34,19 +25,18 @@ export default function ProductPage() {
     );
   }
   
-  // ↓↓ КРОК 3: ЛОГІКА AR ТЕПЕР БЕРЕТЬСЯ З ТОВАРУ ↓↓
   const modelSrc = product.arModel;
-  const showAR = !!modelSrc; // 'true', якщо arModel не порожній
+  const showAR = !!modelSrc;
 
   return (
     <>
       <Header onSelectCategory={setSelectedCategory} />
       
       <main className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start max-w-6xl mx-auto">
           
           <div className="flex flex-col gap-6">
-            <img src={product.image} alt={product.title} className="w-full h-auto object-cover rounded-lg shadow-lg border p-6" />
+            <img src={product.image} alt={product.title} className="w-full h-auto object-cover rounded-lg shadow-lg border" />
             
             {showAR && (
               <ARViewer modelSrc={modelSrc} />
@@ -54,16 +44,17 @@ export default function ProductPage() {
           </div>
           
           <div className="flex flex-col">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">{product.title}</h1>
-            <p className="text-gray-500 text-lg mb-4 capitalize">{product.category}</p>
-            <p className="text-4xl font-bold text-blue-600 mb-6">${product.price}</p>
+            <p className="text-blue-600 font-semibold mb-2 capitalize">{product.category}</p>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">{product.title}</h1>
+            <p className="text-4xl font-light text-gray-800 mb-6">${product.price}</p>
             
-            <h2 className="text-xl font-semibold mb-2">Опис</h2>
-            <p className="text-gray-700 leading-relaxed mb-8">{product.description}</p>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">Опис</h2>
+            <p className="text-gray-600 leading-relaxed mb-8">{product.description}</p>
             
+            {/* Оновлена кнопка (основна дія - синя) */}
             <button 
               onClick={() => addToCart(product)}
-              className="w-full bg-blue-500 text-white p-3 rounded-lg text-lg font-bold hover:bg-blue-700"
+              className="w-full bg-blue-600 text-white p-4 rounded-lg text-base font-bold hover:bg-blue-700 shadow-lg hover:shadow-blue-300"
             >
               Додати в кошик
             </button>
