@@ -1,13 +1,14 @@
-"use client"; // Це "магічний" рядок, що робить цей компонент Клієнтським
+"use client"; 
 
 import dynamic from 'next/dynamic';
 
-// ↓↓ МИ ПЕРЕНЕСЛИ ДИНАМІЧНИЙ ІМПОРТ СЮДИ ↓↓
-// Тепер це безпечно, бо ми всередині "use client"
-const ARViewer = dynamic(() => import('@/components/ARViewer'), {
-  ssr: false, // <-- Ця команда тепер у безпечному місці
+// ↓↓ ОНОВЛЕНИЙ РЯДОК (виправлено шлях) ↓↓
+// Ми замінили '@/' на './' (відносний шлях)
+const ARViewer = dynamic(() => import('./ARViewer'), {
+  ssr: false, 
   loading: () => <p className="w-full h-96 border p-4 bg-gray-100 rounded text-center">Завантаження 3D-моделі...</p>
 });
+// ↑↑ КІНЕЦЬ ОНОВЛЕНОГО РЯДКА ↑↑
 
 // Цей компонент отримує 'product' і 'showAR' від серверного 'page.js'
 export default function ProductDisplay({ product, showAR }) {
