@@ -3,12 +3,15 @@
 
 import Link from 'next/link';
 import { useCart } from '../context/CartContext';
-
-// Категорії (ми їх "захардкодимо", щоб не робити зайвий API-запит)
-const categories = ["Всі", "electronics", "jewelery", "men's clothing", "women's clothing"];
+// ↓↓ КРОК 1: ІМПОРТУЄМО ВАШУ ФУНКЦІЮ КАТЕГОРІЙ ↓↓
+import { getCategories } from '../lib/data';
 
 export default function Header({ onSelectCategory }) {
   const { itemCount } = useCart();
+  
+  // ↓↓ КРОК 2: ПРИБИРАЄМО "ЗАХАРДКОДЖЕНИЙ" СПИСОК ↓↓
+  // і замінюємо його на динамічний виклик
+  const categories = getCategories();
 
   return (
     <header className="w-full bg-white shadow-md sticky top-0 z-40">
@@ -17,7 +20,7 @@ export default function Header({ onSelectCategory }) {
           MinimalistShop
         </Link>
         
-        {/* Меню Категорій */}
+        {/* Меню Категорій (тепер воно динамічне) */}
         <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
           {categories.map(category => (
             <button
@@ -25,7 +28,7 @@ export default function Header({ onSelectCategory }) {
               onClick={() => onSelectCategory(category)}
               className="text-gray-600 hover:text-blue-500 capitalize"
             >
-              {category === "Всі" ? "Всі" : category}
+              {category} 
             </button>
           ))}
         </div>
