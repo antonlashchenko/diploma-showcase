@@ -11,7 +11,7 @@ export async function generateStaticParams() {
   const products = getAllProducts();
  
   // Повертаємо масив об'єктів, який очікує Next.js
-  // Наприклад: [ { productId: '1' }, { productId: '2' }, ... ]
+  // Наприклад: [ { productId: '1' } ]
   return products.map((product) => ({
     productId: product.id,
   }));
