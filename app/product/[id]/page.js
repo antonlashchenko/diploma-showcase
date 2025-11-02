@@ -1,9 +1,19 @@
-// ↓↓ ДОДАНО ІМПОРТ КЛІЄНТСЬКОГО КОМПОНЕНТА ↓↓
-import ARViewer from "@/components/ARViewer";
+// ↓↓ КРОК 1: ІМПОРТУЄМО 'DYNAMIC' ↓↓
+import dynamic from 'next/dynamic';
+
+// ↓↓ КРОК 2: ДИНАМІЧНО ІМПОРТУЄМО AR-КОМПОНЕНТ ↓↓
+// Ми кажемо Next.js: "Завантаж цей компонент ТІЛЬКИ в браузері,
+// і НЕ намагайся рендерити його на сервері (ssr: false)".
+const ARViewer = dynamic(() => import('@/components/ARViewer'), {
+  ssr: false,
+  loading: () => <p className="w-full h-96 border p-4 bg-gray-100 rounded text-center">Завантаження 3D-моделі...</p>
+});
+// 'loading' - це те, що побачить користувач, поки компонент завантажується.
+
+// --- Решта коду залишається майже без змін ---
 
 // Ця функція буде завантажувати дані ТІЛЬКИ ОДНОГО товару
 async function getProduct(id) {
-  // Зверніть увагу, як ми використовуємо ID в URL
   const res = await fetch(`https://fakestoreapi.com/products/${id}`);
   if (!res.ok) {
     throw new Error('Failed to fetch data');
@@ -11,17 +21,11 @@ async function getProduct(id) {
   return res.json();
 }
 
-// 'params' - це спеціальний об'єкт, Next.js передає сюди ID з URL
 export default async function ProductPage({ params }) {
   const product = await getProduct(params.id);
 
   // "РОЗУМНИЙ" AR:
-  // Ми "прикинемося", що наш стілець - це товар з ID 10
-  // (це "SanDisk SSD PLUS 1TB", але ми просто покажемо стілець для прикладу)
-  // Ви можете обрати будь-який ID (1, 2, 3...)
   const AR_MODEL_ID = 10;
-  
-  // Перевіряємо, чи є ID поточної сторінки тим самим "обраним" ID
   const showAR = (product.id === AR_MODEL_ID);
 
   return (
@@ -40,8 +44,7 @@ export default async function ProductPage({ params }) {
         <div className="flex flex-col gap-4">
           <img src={product.image} alt={product.title} className="w-full h-auto object-contain rounded border p-4" />
           
-          {/* ↓↓ ОНОВЛЕНИЙ "РОЗУМНИЙ" AR-БЛОК ↓↓ */}
-          {/* Ми показуємо наш новий, безпечний компонент <ARViewer /> */}
+          {/* ↓↓ НАШ AR-БЛОК (код не змінився) ↓↓ */}
           {showAR && (
             <ARViewer />
           )}
@@ -71,3 +74,4 @@ export default async function ProductPage({ params }) {
     </main>
   );
 }
+
