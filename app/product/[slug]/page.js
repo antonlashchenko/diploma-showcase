@@ -1,18 +1,17 @@
-// Шлях: app/product/[slug]/page.js
 "use client";
 
-import { useParams } from 'next/navigation'; // Хук для отримання slug
-import { getProductById } from '../../lib/data'; // Наші дані
-import { useCart } from '../../context/CartContext'; // Наш кошик
-import ARViewer from '../../components/ARViewer'; // Наш AR
-import Header from '../../components/Header'; // Хедер потрібен і тут
+import { useParams } from 'next/navigation';
+// ↓↓ ВИПРАВЛЕНІ ШЛЯХИ (на 3 рівні вгору) ↓↓
+import { getProductById } from '../../../lib/data';
+import { useCart } from '../../../context/CartContext';
+import ARViewer from '../../../components/ARViewer';
+import Header from '../../../components/Header';
 import { useState } from 'react';
 
 export default function ProductPage() {
-  const params = useParams(); // Отримуємо { slug: '1' }
+  const params = useParams(); 
   const { addToCart } = useCart();
   
-  // Цей стан тут потрібен, щоб Хедер працював, але ми ним не керуємо
   const [_, setSelectedCategory] = useState("Всі");
   
   const product = getProductById(params.slug);
@@ -26,7 +25,6 @@ export default function ProductPage() {
     );
   }
   
-  // Перевіряємо, чи є AR-модель
   const showAR = !!product.arModel;
 
   return (
@@ -36,17 +34,14 @@ export default function ProductPage() {
       <main className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           
-          {/* Ліва колонка: Картинка та AR */}
           <div className="flex flex-col gap-6">
             <img src={product.image} alt={product.title} className="w-full h-auto object-cover rounded-lg shadow-lg border" />
             
-            {/* "Розумний" AR-блок */}
             {showAR && (
               <ARViewer modelSrc={product.arModel} />
             )}
           </div>
           
-          {/* Права колонка: Опис */}
           <div className="flex flex-col">
             <h1 className="text-4xl font-bold text-gray-800 mb-4">{product.title}</h1>
             <p className="text-gray-500 text-lg mb-4">{product.category}</p>

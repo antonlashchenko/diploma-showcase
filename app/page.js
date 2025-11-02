@@ -1,8 +1,8 @@
-// Шлях: app/page.js
 "use client";
 
 import { useState } from 'react';
 import Link from 'next/link';
+// ↓↓ ВИПРАВЛЕНИЙ ШЛЯХ (на 1 рівень вгору) ↓↓
 import Header from '../components/Header';
 import { getAllProducts } from '../lib/data';
 
@@ -11,14 +11,12 @@ export default function Home() {
   
   const allProducts = getAllProducts();
 
-  // Фільтруємо товари
   const filteredProducts = selectedCategory === "Всі"
     ? allProducts
     : allProducts.filter(p => p.category === selectedCategory);
   
   return (
     <>
-      {/* Передаємо функцію 'setSelectedCategory' у Хедер */}
       <Header onSelectCategory={setSelectedCategory} />
       
       <main className="container mx-auto px-6 py-8">
@@ -26,7 +24,6 @@ export default function Home() {
           {selectedCategory}
         </h2>
         
-        {/* Сітка товарів */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
             <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">

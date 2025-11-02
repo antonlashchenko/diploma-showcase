@@ -1,8 +1,8 @@
-// Шлях: app/cart/page.js
 "use client";
 
-import { useCart } from '../context/CartContext';
-import Header from '../components/Header';
+// ↓↓ ВИПРАВЛЕНІ ШЛЯХИ (на 2 рівні вгору) ↓↓
+import { useCart } from '../../context/CartContext';
+import Header from '../../components/Header';
 import { useState } from 'react';
 import Link from 'next/link';
 
@@ -22,7 +22,6 @@ export default function CartPage() {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             
-            {/* Список товарів у кошику */}
             <div className="lg:col-span-2 flex flex-col gap-6">
               {items.map(item => (
                 <div key={item.id} className="flex gap-4 bg-white p-4 rounded-lg shadow-md items-center">
@@ -42,7 +41,6 @@ export default function CartPage() {
               ))}
             </div>
             
-            {/* Блок "До оплати" */}
             <div className="bg-white p-6 rounded-lg shadow-md h-fit">
               <h2 className="text-2xl font-semibold mb-4">Разом до оплати</h2>
               <div className="flex justify-between text-lg mb-2">
@@ -59,7 +57,6 @@ export default function CartPage() {
                 <span>${getTotalPrice()}</span>
               </div>
               
-              {/* НЕФУНКЦІОНАЛЬНА КНОПКА */}
               <button 
                 className="w-full bg-green-500 text-white p-3 rounded-lg text-lg font-bold opacity-50 cursor-not-allowed"
                 disabled
