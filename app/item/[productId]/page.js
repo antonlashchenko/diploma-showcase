@@ -2,21 +2,23 @@
 "use client";
 
 import { useParams } from 'next/navigation';
-import { useCart } from '../../context/CartContext';
-import ARViewer from '../../components/ARViewer';
-import Header from '../../components/Header';
+// ↓↓ ВИПРАВЛЕНІ ШЛЯХИ (на 3 рівні вгору) ↓↓
+import { useCart } from '../../../context/CartContext';
+import ARViewer from '../../../components/ARViewer';
+import Header from '../../../components/Header';
+// ↑↑ КІНЕЦЬ ВИПРАВЛЕНЬ ↑↑
 import { useState, useEffect } from 'react';
 
 // "БД" для наших AR-моделей
 const arModels = {
   // Тут ID товару з FakeStoreAPI : шлях до моделі
-  "1": "/fjc_watch.glb", // Це товар 'Fjallraven ... Backpack'
+  "1": "/office_chair.glb", // Це товар 'Fjallraven ... Backpack'
   "10": "/office_chair.glb", // Це 'SanDisk SSD PLUS 1TB'
-  // Додайте сюди ID інших товарів та шляхи до .glb файлів
+  // (Я залишив "1", щоб ви могли протестувати AR на першому ж товарі)
 };
 
 export default function ProductPage() {
-  const params = useParams(); // Отримуємо { productId: '1' }
+  const params = useParams(); 
   const id = params.productId;
   
   const { addToCart } = useCart();
