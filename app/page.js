@@ -1,11 +1,10 @@
 import Link from 'next/link';
-// 1. Імпортуємо наші власні дані
-import { getAllProducts } from '@/lib/data';
+// ↓↓ ЗМІНА ТУТ: Замінили '@/' на '../lib/data' ↓↓
+import { getAllProducts } from '../lib/data';
 
-// 2. Цей компонент знову Серверний (немає "use client")
+// Цей компонент Серверний (немає "use client")
 export default function Home() {
 
-  // 3. Отримуємо товари прямо з файлу, без 'fetch'
   const products = getAllProducts();
 
   return (

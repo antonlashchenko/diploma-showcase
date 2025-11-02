@@ -1,14 +1,15 @@
-// 1. Імпортуємо функцію для отримання одного товару
-import { getProductById } from '@/lib/data';
-import ProductDisplay from '@/components/ProductDisplay';
+// ↓↓ ЗМІНА ТУТ: Замінили '@/' на '../../../lib/data' ↓↓
+import { getProductById } from '../../../lib/data';
+// ↓↓ ЗМІНА ТУТ: Замінили '@/' на '../../../components/ProductDisplay' ↓↓
+import ProductDisplay from '../../../components/ProductDisplay';
 
-// 2. Це Серверний Компонент
+// Це Серверний Компонент
 export default function ProductPage({ params }) {
 
-  // 3. Отримуємо наш продукт з локального файлу
+  // Отримуємо наш продукт з локального файлу
   const product = getProductById(params.id);
 
-  // 4. Якщо товар не знайдено (наприклад, неправильний ID)
+  // Якщо товар не знайдено (наприклад, неправильний ID)
   if (!product) {
     return (
       <main className="flex min-h-screen flex-col items-center">
@@ -22,7 +23,7 @@ export default function ProductPage({ params }) {
     );
   }
 
-  // 5. Передаємо СПРАВЖНІЙ продукт у Клієнтський Компонент
+  // Передаємо СПРАВЖНІЙ продукт у Клієнтський Компонент
   return (
     <main className="flex min-h-screen flex-col items-center">
       <header className="w-full p-4 bg-blue-600 text-white shadow-md">
@@ -31,8 +32,6 @@ export default function ProductPage({ params }) {
         </a>
       </header>
 
-      {/* ProductDisplay залишається Клієнтським,
-          але він отримує дані з Сервера - це ідеально */}
       <ProductDisplay product={product} />
 
       <footer className="w-full p-4 text-center text-gray-500 text-sm mt-auto bg-gray-100">
