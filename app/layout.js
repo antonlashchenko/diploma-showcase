@@ -19,6 +19,20 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+
+      {/* ↓↓ МИ ДОДАЛИ ЦЕЙ ТЕГ <head> ↓↓ */}
+      <head>
+        {/* Next.js автоматично додасть сюди вашу 'metadata'.
+          А ми вручну додаємо скрипт для 3D/AR.
+        */}
+        <script 
+          type="module" 
+          src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js" 
+          async>
+        </script>
+      </head>
+      {/* ↑↑ КІНЕЦЬ ДОДАНОГО БЛОКУ ↑↑ */}
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
