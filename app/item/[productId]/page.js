@@ -2,20 +2,16 @@
 "use client";
 
 import { useParams } from 'next/navigation';
-// ↓↓ ВИПРАВЛЕНІ ШЛЯХИ (на 3 рівні вгору) ↓↓
 import { useCart } from '../../../context/CartContext';
 import ARViewer from '../../../components/ARViewer';
 import Header from '../../../components/Header';
-// ↑↑ КІНЕЦЬ ВИПРАВЛЕНЬ ↑↑
-import { useState, useEffect } from 'react';
+import { useState } from 'react'; // 'useEffect' нам більше не потрібен
 
-// "БД" для наших AR-моделей
-const arModels = {
-  // Тут ID товару з FakeStoreAPI : шлях до моделі
-  "1": "/office_chair.glb", // Це товар 'Fjallraven ... Backpack'
-  "10": "/office_chair.glb", // Це 'SanDisk SSD PLUS 1TB'
-  // (Я залишив "1", щоб ви могли протестувати AR на першому ж товарі)
-};
+// ↓↓ КРОК 1: ІМПОРТУЄМО ВАШУ ВЛАСНУ ФУНКЦІЮ ПОШУКУ ↓↓
+import { getProductById } from '../../../lib/data';
+
+// "БД" для AR-моделей нам більше не потрібна,
+// оскільки шлях до моделі тепер у 'product.arModel'
 
 export default function ProductPage() {
   const params = useParams(); 
@@ -23,34 +19,11 @@ export default function ProductPage() {
   
   const { addToCart } = useCart();
   const [_, setSelectedCategory] = useState("Всі");
-  const [product, setProduct] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
 
-  // Завантажуємо ОДИН товар
-  useEffect(() => {
-    async function fetchProduct() {
-      if (!id) return;
-      try {
-        const res = await fetch(`https://fakestoreapi.com/products/${id}`);
-        const data = await res.json();
-        setProduct(data);
-      } catch (error) {
-        console.error("Failed to fetch product:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchProduct();
-  }, [id]);
-
-  if (isLoading) {
-    return (
-      <>
-        <Header onSelectCategory={setSelectedCategory} />
-        <p className="p-10 text-center">Завантаження товару...</p>
-      </>
-    );
-  }
+  // ↓↓ КРОК 2: ПРИБИРАЄМО 'useEffect' і 'fetch' ↓↓
+  // Просто отримуємо товар прямо з нашого файлу
+  const product = getProductById(id);
+  // 'isLoading' нам більше не потрібен
 
   if (!product) {
     return (
@@ -61,9 +34,9 @@ export default function ProductPage() {
     );
   }
   
-  // Перевіряємо, чи є для цього ID AR-модель
-  const modelSrc = arModels[product.id];
-  const showAR = !!modelSrc;
+  // ↓↓ КРОК 3: ЛОГІКА AR ТЕПЕР БЕРЕТЬСЯ З ТОВАРУ ↓↓
+  const modelSrc = product.arModel;
+  const showAR = !!modelSrc; // 'true', якщо arModel не порожній
 
   return (
     <>
@@ -73,7 +46,7 @@ export default function ProductPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           
           <div className="flex flex-col gap-6">
-            <img src={product.image} alt={product.title} className="w-full h-auto object-contain rounded-lg shadow-lg border p-6" />
+            <img src={product.image} alt={product.title} className="w-full h-auto object-cover rounded-lg shadow-lg border p-6" />
             
             {showAR && (
               <ARViewer modelSrc={modelSrc} />
