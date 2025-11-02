@@ -1,6 +1,6 @@
 "use client";
 
-// 1. Прибираємо 'Script from "next/script"'
+// 1. Ми НЕ імпортуємо 'Script' з 'next/script'
 import { useState, useEffect } from 'react';
 
 // Назва скрипта, який ми шукаємо
@@ -9,11 +9,12 @@ const MODEL_VIEWER_SCRIPT_SRC = "https://ajax.googleapis.com/ajax/libs/model-vie
 
 export default function ARViewer() {
   
+  // 'isClient' - наш "захисник" від сервера
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     // 2. Коли компонент "оживає" у браузері:
-    // Перевіряємо, чи скрипт ВЖЕ не завантажений (щоб не дублювати)
+    // Перевіряємо, чи скрипт ВЖЕ не завантажений
     if (!document.getElementById(MODEL_VIEWER_SCRIPT_ID)) {
       // Створюємо новий тег <script>
       const script = document.createElement('script');
@@ -29,11 +30,14 @@ export default function ARViewer() {
     setIsClient(true);
   }, []); // Пустий масив = виконати один раз
 
-  // 3. Логіка "захисту" залишається
+  // 3. Логіка "захисту"
   return (
     <div className="w-full h-96 border p-4 bg-gray-100 rounded">
       <h3 className="text-xl font-bold text-center mb-4">Демонстрація AR-примірки</h3>
       
+      {/* Сервер (де isClient = false) побачить тільки <p>Завантаження...</p>
+        Браузер (де isClient = true) побачить <model-viewer>
+      */}
       {isClient ? (
         <model-viewer
             src="/office_chair.glb"
@@ -47,6 +51,7 @@ export default function ARViewer() {
         >
         </model-viewer>
       ) : (
+        // Це "безпечна" заглушка, яку сервер може малювати
         <p className="w-full h-[300px] flex items-center justify-center">
           Завантаження 3D-моделі...
         </p>
