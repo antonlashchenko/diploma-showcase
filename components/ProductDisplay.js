@@ -1,16 +1,16 @@
 "use client"; 
 
+// 1. Імпортуємо 'dynamic'
 import dynamic from 'next/dynamic';
 
-// ↓↓ ОНОВЛЕНИЙ РЯДОК (виправлено шлях) ↓↓
-// Ми замінили '@/' на './' (відносний шлях)
+// 2. ЗНОВУ додаємо динамічний імпорт з 'ssr: false'
+// Ми використовуємо відносний шлях './ARViewer', який є надійним
 const ARViewer = dynamic(() => import('./ARViewer'), {
   ssr: false, 
   loading: () => <p className="w-full h-96 border p-4 bg-gray-100 rounded text-center">Завантаження 3D-моделі...</p>
 });
-// ↑↑ КІНЕЦЬ ОНОВЛЕНОГО РЯДКА ↑↑
 
-// Цей компонент отримує 'product' і 'showAR' від серверного 'page.js'
+// Решта компоненту
 export default function ProductDisplay({ product, showAR }) {
   return (
     <div className="w-full max-w-4xl p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -19,7 +19,7 @@ export default function ProductDisplay({ product, showAR }) {
       <div className="flex flex-col gap-4">
         <img src={product.image} alt={product.title} className="w-full h-auto object-contain rounded border p-4" />
         
-        {/* Умовний рендеринг AR-моделі */}
+        {/* Умовний рендеринг динамічно імпортованого компоненту */}
         {showAR && (
           <ARViewer />
         )}
