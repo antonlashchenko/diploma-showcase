@@ -1,11 +1,12 @@
-// Ми все ще використовуємо надійні відносні шляхи
+// Шлях: app/product/[slug]/page.js
+
+// Використовуємо відносні шляхи
 import { getProductById } from '../../../lib/data';
 import ProductDisplay from '../../../components/ProductDisplay';
 
-// 'params' тепер буде містити { slug: '1' } замість { id: '1' }
+// 'params' тепер буде містити { slug: '1' }
 export default function ProductPage({ params }) {
   
-  // --- БЛОК ДЛЯ НАЛАГОДЖЕННЯ ---
   console.log("--- СТОРІНКА ТОВАРУ [slug] ЗАПУСТИЛАСЬ ---");
   
   // ↓↓ ЗМІНА ТУТ: Використовуємо 'params.slug' ↓↓
@@ -16,7 +17,6 @@ export default function ProductPage({ params }) {
   const product = getProductById(params.slug);
 
   console.log("Результат пошуку (product):", product);
-  // --- КІНЕЦЬ БЛОКУ ДЛЯ НАЛАГОДЖЕННЯ ---
 
 
   if (!product) {
@@ -28,7 +28,6 @@ export default function ProductPage({ params }) {
             &larr; Назад до каталогу
           </a>
         </header>
-        {/* ↓↓ ЗМІНА ТУТ: Показуємо 'params.slug' для налагодження ↓↓ */}
         <p className="p-10 text-center text-red-500">Товар не знайдено. (SLUG: {params.slug})</p>
       </main>
     );
