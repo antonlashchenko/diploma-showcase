@@ -1,3 +1,5 @@
+import Link from 'next/link'; // ← ДОДАНО ДЛЯ "РОЗУМНИХ" ПОСИЛАНЬ
+
 // Функція для завантаження даних
 async function getProducts() {
   // Ми звертаємось до FakeStoreAPI, щоб отримати товари
@@ -17,29 +19,7 @@ export default async function Home() {
         <h1 className="text-2xl font-bold">Мій E-commerce Шоукейс</h1>
       </header>
 
-      {/* ↓↓ БЛОК ДЛЯ AR-МОДЕЛІ ↓↓ */}
-      <div className="w-full h-96 border-b-4 border-blue-200 p-4 bg-gray-100">
-        
-        [cite_start]{/* Ми прибрали [cite: 30] звідси */}
-        <h2 className="text-2xl font-bold text-center mb-4">Демонстрація AR-примірки</h2>
-
-        {/* Це і є компонент 3D-моделі. 
-          Переконайтеся, що ваш файл у папці 'public' 
-          називається 'office_chair.glb' 
-        */}
-        <model-viewer
-            src="/office_chair.glb" 
-            alt="3D model"
-            ar
-            ar-modes="webxr scene-viewer quick-look"
-            camera-controls
-            shadow-intensity="1"
-            auto-rotate
-            style={{width: '100%', height: '300px'}}
-        >
-        </model-viewer>
-      </div>
-      {/* ↑↑ КІНЕЦЬ БЛОКУ AR-МОДЕЛІ ↑↑ */}
+      {/* ↓↓ БЛОК AR-МОДЕЛІ БУВ ТУТ, ТЕПЕР ЙОГО ВИДАЛЕНО! ↓↓ */}
 
       {/* Секція для товарів */}
       <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
@@ -49,9 +29,14 @@ export default async function Home() {
             <img src={product.image} alt={product.title} className="h-48 w-full object-contain mb-4" />
             <h2 className="text-lg font-semibold truncate flex-grow">{product.title}</h2>
             <p className="text-xl font-bold text-blue-600 mt-2">${product.price}</p>
-            <a href="#" className="mt-4 text-center bg-blue-500 text-white p-2 rounded hover:bg-blue-700">
+            
+            {/* ↓↓ ОНОВЛЕНЕ ПОСИЛАННЯ ↓↓ */}
+            {/* Ми замінили <a> на <Link> і додали динамічне посилання */}
+            <Link href={`/product/${product.id}`} className="mt-4 text-center bg-blue-500 text-white p-2 rounded hover:bg-blue-700">
               Детальніше
-            </a>
+            </Link>
+            {/* ↑↑ КІНЕЦЬ ОНОВЛЕНОГО ПОСИЛАННЯ ↑↑ */}
+
           </div>
         ))}
       </div>
