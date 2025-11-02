@@ -10,7 +10,6 @@ export default function ARViewer({ modelSrc }) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // Ця логіка надійно завантажує скрипт тільки в браузері
     if (!document.getElementById(MODEL_VIEWER_SCRIPT_ID)) {
       const script = document.createElement('script');
       script.id = MODEL_VIEWER_SCRIPT_ID;
