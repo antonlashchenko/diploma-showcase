@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import "./globals.css"; // Підключаємо Tailwind
 import { CartProvider } from "../context/CartContext"; // Наш Кошик
 import CookieBanner from '../components/CookieBanner'; // Наш Банер
+import Footer from '../components/Footer'; // ← ОСЬ РЯДОК, ЯКИЙ МИ ДОДАЛИ
 
 export default function RootLayout({ children }) {
   
@@ -43,6 +44,7 @@ export default function RootLayout({ children }) {
             {children}
           </div>
           
+          {/* Тепер <Footer /> буде працювати, бо ми його імпортували */}
           <Footer /> 
           
           {/* Банер з'явиться, тільки якщо showCookie=true */}
