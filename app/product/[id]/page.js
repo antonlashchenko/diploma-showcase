@@ -1,16 +1,23 @@
-// ↓↓ ЗМІНА ТУТ: Замінили '@/' на '../../../lib/data' ↓↓
+// Ми будемо використовувати відносні шляхи, вони найнадійніші
 import { getProductById } from '../../../lib/data';
-// ↓↓ ЗМІНА ТУТ: Замінили '@/' на '../../../components/ProductDisplay' ↓↓
 import ProductDisplay from '../../../components/ProductDisplay';
 
-// Це Серверний Компонент
 export default function ProductPage({ params }) {
+  
+  // --- ПОЧАТОК БЛОКУ ДЛЯ НАЛАГОДЖЕННЯ ---
+  console.log("--- СТОРІНКА ТОВАРУ ЗАПУСТИЛАСЯ ---");
+  console.log("Отриманий ID з URL (params.id):", params.id);
+  console.log("Тип params.id:", typeof params.id);
 
-  // Отримуємо наш продукт з локального файлу
   const product = getProductById(params.id);
 
-  // Якщо товар не знайдено (наприклад, неправильний ID)
+  console.log("Результат пошуку (product):", product); // Подивимося, що знайшла функція
+  // --- КІНЕЦЬ БЛОКУ ДЛЯ НАЛАГОДЖЕННЯ ---
+
+
   if (!product) {
+    // Якщо product тут undefined, ми побачимо це в логах
+    console.log("ПОМИЛКА: Продукт не знайдено. Повертаємо сторінку помилки.");
     return (
       <main className="flex min-h-screen flex-col items-center">
          <header className="w-full p-4 bg-blue-600 text-white shadow-md">
@@ -18,12 +25,13 @@ export default function ProductPage({ params }) {
             &larr; Назад до каталогу
           </a>
         </header>
-        <p className="p-10 text-center text-red-500">Товар не знайдено.</p>
+        <p className="p-10 text-center text-red-500">Товар не знайдено. (ID: {params.id})</p>
       </main>
     );
   }
 
-  // Передаємо СПРАВЖНІЙ продукт у Клієнтський Компонент
+  // Якщо ми дійшли сюди, продукт знайдено
+  console.log("УСПІХ: Продукт знайдено, малюємо сторінку.");
   return (
     <main className="flex min-h-screen flex-col items-center">
       <header className="w-full p-4 bg-blue-600 text-white shadow-md">
