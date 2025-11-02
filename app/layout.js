@@ -1,51 +1,57 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+// Шлях: app/layout.js
+"use client"; // Робимо Layout клієнтським для керування cookie
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata = {
-  title: "E-commerce Showcase",
-  description: "Дипломний проект ДПУ",
-};
+import { useState, useEffect } from 'react';
+import "./globals.css"; // Підключаємо Tailwind
+import { CartProvider } from "../context/CartContext"; // Наш Кошик
+import CookieBanner from '../components/CookieBanner'; // Наш Банер
 
 export default function RootLayout({ children }) {
+  
+  // Стан для cookie банера
+  const [showCookie, setShowCookie] = useState(false);
+
+  // Перевіряємо localStorage, чи користувач вже натискав "OK"
+  useEffect(() => {
+    if (localStorage.getItem("cookie_accepted") !== "true") {
+      setShowCookie(true);
+    }
+  }, []);
+
+  // Функція, яка ховає банер і запам'ятовує вибір
+  const handleAcceptCookie = () => {
+    setShowCookie(false);
+    localStorage.setItem("cookie_accepted", "true");
+  };
+  
   return (
-    <html lang="en">
+    <html lang="uk">
       <head>
-        {/*
-          <script ... model-viewer ...>
-          ↑↑↑ Я ВИДАЛИВ ПРОБЛЕМНИЙ СКРИПТ ЗВІДСИ ↑↑↑
-        */}
-        
-        {/* PWA-теги залишаються, вони безпечні */}
+        <title>Minimalist Shop</title>
+        {/* PWA-теги (як ми робили раніше) */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>
-
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-        
-        {/* Tidio залишається, він безпечний */}
-        <script src="//code.tidio.co/txssd0zgjsqnoyz0lrzkg0w5utbdipc9.js" async></script>
-        
-        {/* Банер GDPR залишається */}
-        <div className="fixed bottom-0 left-0 w-full bg-gray-800 text-white p-4 text-center text-sm z-50">
-          <p>Цей сайт використовує cookie для демонстрації диплому.
-            <button className="ml-4 bg-blue-500 p-1 rounded">OK</button>
-          </p>
-        </div>
-        
-      </body>
+      
+      {/* Обгортаємо ВСЕ у CartProvider */}
+      <CartProvider>
+        {/* 'min-h-screen' і 'flex-col' змушують футер бути внизу */}
+        <body className="flex flex-col min-h-screen bg-gray-50">
+          
+          {/* Наші компоненти будуть "дітьми" (children) */}
+          <div className="flex-grow">
+            {children}
+          </div>
+          
+          <Footer /> 
+          
+          {/* Банер з'явиться, тільки якщо showCookie=true */}
+          {showCookie && <CookieBanner onAccept={handleAcceptCookie} />}
+          
+          {/* Tidio (якщо він вам ще потрібен) */}
+          <script src="//code.tidio.co/txssd0zgjsqnoyz0lrzkg0w5utbdipc9.js" async></script>
+        </body>
+      </CartProvider>
     </html>
   );
 }

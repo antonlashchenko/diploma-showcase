@@ -1,52 +1,69 @@
 // Шлях: app/product/[slug]/page.js
+"use client";
 
-// Використовуємо відносні шляхи
-import { getProductById } from '../../../lib/data';
-import ProductDisplay from '../../../components/ProductDisplay';
+import { useParams } from 'next/navigation'; // Хук для отримання slug
+import { getProductById } from '../../lib/data'; // Наші дані
+import { useCart } from '../../context/CartContext'; // Наш кошик
+import ARViewer from '../../components/ARViewer'; // Наш AR
+import Header from '../../components/Header'; // Хедер потрібен і тут
+import { useState } from 'react';
 
-// 'params' тепер буде містити { slug: '1' }
-export default function ProductPage({ params }) {
+export default function ProductPage() {
+  const params = useParams(); // Отримуємо { slug: '1' }
+  const { addToCart } = useCart();
   
-  console.log("--- СТОРІНКА ТОВАРУ [slug] ЗАПУСТИЛАСЬ ---");
+  // Цей стан тут потрібен, щоб Хедер працював, але ми ним не керуємо
+  const [_, setSelectedCategory] = useState("Всі");
   
-  // ↓↓ ЗМІНА ТУТ: Використовуємо 'params.slug' ↓↓
-  console.log("Отриманий SLUG з URL (params.slug):", params.slug);
-  console.log("Тип params.slug:", typeof params.slug);
-
-  // ↓↓ ЗМІНА ТУТ: Передаємо 'params.slug' у функцію пошуку ↓↓
   const product = getProductById(params.slug);
 
-  console.log("Результат пошуку (product):", product);
-
-
   if (!product) {
-    console.log("ПОМИЛКА: Продукт не знайдено.");
     return (
-      <main className="flex min-h-screen flex-col items-center">
-         <header className="w-full p-4 bg-blue-600 text-white shadow-md">
-          <a href="/" className="text-2xl font-bold hover:underline">
-            &larr; Назад до каталогу
-          </a>
-        </header>
-        <p className="p-10 text-center text-red-500">Товар не знайдено. (SLUG: {params.slug})</p>
-      </main>
+      <>
+        <Header onSelectCategory={setSelectedCategory} />
+        <p className="p-10 text-center text-red-500">Товар не знайдено.</p>
+      </>
     );
   }
+  
+  // Перевіряємо, чи є AR-модель
+  const showAR = !!product.arModel;
 
-  console.log("УСПІХ: Продукт знайдено, малюємо сторінку.");
   return (
-    <main className="flex min-h-screen flex-col items-center">
-      <header className="w-full p-4 bg-blue-600 text-white shadow-md">
-        <a href="/" className="text-2xl font-bold hover:underline">
-          &larr; Назад до каталогу
-        </a>
-      </header>
-
-      <ProductDisplay product={product} />
-
-      <footer className="w-full p-4 text-center text-gray-500 text-sm mt-auto bg-gray-100">
-         © 2025 Антон Лащенко, ДПУ. Демонстрація трендів е-комерції.
-      </footer>
-    </main>
+    <>
+      <Header onSelectCategory={setSelectedCategory} />
+      
+      <main className="container mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+          
+          {/* Ліва колонка: Картинка та AR */}
+          <div className="flex flex-col gap-6">
+            <img src={product.image} alt={product.title} className="w-full h-auto object-cover rounded-lg shadow-lg border" />
+            
+            {/* "Розумний" AR-блок */}
+            {showAR && (
+              <ARViewer modelSrc={product.arModel} />
+            )}
+          </div>
+          
+          {/* Права колонка: Опис */}
+          <div className="flex flex-col">
+            <h1 className="text-4xl font-bold text-gray-800 mb-4">{product.title}</h1>
+            <p className="text-gray-500 text-lg mb-4">{product.category}</p>
+            <p className="text-4xl font-bold text-blue-600 mb-6">${product.price}</p>
+            
+            <h2 className="text-xl font-semibold mb-2">Опис</h2>
+            <p className="text-gray-700 leading-relaxed mb-8">{product.description}</p>
+            
+            <button 
+              onClick={() => addToCart(product)}
+              className="w-full bg-blue-500 text-white p-3 rounded-lg text-lg font-bold hover:bg-blue-700"
+            >
+              Додати в кошик
+            </button>
+          </div>
+        </div>
+      </main>
+    </>
   );
 }
