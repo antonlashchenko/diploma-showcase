@@ -1,64 +1,34 @@
-"use client";
+// Шлях: app/product/[slug]/page.js
+// НЕМАЄ "use client" - це Серверний Компонент
 
-import { useParams } from 'next/navigation';
-// ↓↓ ВИПРАВЛЕНІ ШЛЯХИ (на 3 рівні вгору) ↓↓
+// 1. БЕЗПЕЧНО імпортуємо дані (з 'fs')
 import { getProductById } from '../../../lib/data';
-import { useCart } from '../../../context/CartContext';
-import ARViewer from '../../../components/ARViewer';
-import Header from '../../../components/Header';
-import { useState } from 'react';
+// 2. Імпортуємо наш НОВИЙ клієнтський компонент
+import ProductView from '../../../components/ProductView'; 
 
-export default function ProductPage() {
-  const params = useParams(); 
-  const { addToCart } = useCart();
+export default function ProductPage({ params }) {
   
-  const [_, setSelectedCategory] = useState("Всі");
-  
+  // 3. БЕЗПЕЧНО отримуємо продукт на сервері
   const product = getProductById(params.slug);
 
+  // 4. Якщо товар не знайдено
   if (!product) {
     return (
-      <>
-        <Header onSelectCategory={setSelectedCategory} />
-        <p className="p-10 text-center text-red-500">Товар не знайдено.</p>
-      </>
+      <main className="flex min-h-screen flex-col items-center">
+        {/* Ми не можемо показати Хедер тут, бо він клієнтський,
+            але можемо показати посилання "Назад" */}
+         <header className="w-full p-4 bg-blue-600 text-white shadow-md">
+          <a href="/" className="text-2xl font-bold hover:underline">
+            &larr; Назад до каталогу
+          </a>
+        </header>
+        <p className="p-10 text-center text-red-500">Товар не знайдено. (SLUG: {params.slug})</p>
+      </main>
     );
   }
-  
-  const showAR = !!product.arModel;
 
+  // 5. Передаємо продукт у Клієнтський Компонент
   return (
-    <>
-      <Header onSelectCategory={setSelectedCategory} />
-      
-      <main className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-          
-          <div className="flex flex-col gap-6">
-            <img src={product.image} alt={product.title} className="w-full h-auto object-cover rounded-lg shadow-lg border" />
-            
-            {showAR && (
-              <ARViewer modelSrc={product.arModel} />
-            )}
-          </div>
-          
-          <div className="flex flex-col">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">{product.title}</h1>
-            <p className="text-gray-500 text-lg mb-4">{product.category}</p>
-            <p className="text-4xl font-bold text-blue-600 mb-6">${product.price}</p>
-            
-            <h2 className="text-xl font-semibold mb-2">Опис</h2>
-            <p className="text-gray-700 leading-relaxed mb-8">{product.description}</p>
-            
-            <button 
-              onClick={() => addToCart(product)}
-              className="w-full bg-blue-500 text-white p-3 rounded-lg text-lg font-bold hover:bg-blue-700"
-            >
-              Додати в кошик
-            </button>
-          </div>
-        </div>
-      </main>
-    </>
+    <ProductView product={product} />
   );
 }
