@@ -1,23 +1,26 @@
-// Ми будемо використовувати відносні шляхи, вони найнадійніші
+// Ми все ще використовуємо надійні відносні шляхи
 import { getProductById } from '../../../lib/data';
 import ProductDisplay from '../../../components/ProductDisplay';
 
+// 'params' тепер буде містити { slug: '1' } замість { id: '1' }
 export default function ProductPage({ params }) {
   
-  // --- ПОЧАТОК БЛОКУ ДЛЯ НАЛАГОДЖЕННЯ ---
-  console.log("--- СТОРІНКА ТОВАРУ ЗАПУСТИЛАСЯ ---");
-  console.log("Отриманий ID з URL (params.id):", params.id);
-  console.log("Тип params.id:", typeof params.id);
+  // --- БЛОК ДЛЯ НАЛАГОДЖЕННЯ ---
+  console.log("--- СТОРІНКА ТОВАРУ [slug] ЗАПУСТИЛАСЬ ---");
+  
+  // ↓↓ ЗМІНА ТУТ: Використовуємо 'params.slug' ↓↓
+  console.log("Отриманий SLUG з URL (params.slug):", params.slug);
+  console.log("Тип params.slug:", typeof params.slug);
 
-  const product = getProductById(params.id);
+  // ↓↓ ЗМІНА ТУТ: Передаємо 'params.slug' у функцію пошуку ↓↓
+  const product = getProductById(params.slug);
 
-  console.log("Результат пошуку (product):", product); // Подивимося, що знайшла функція
+  console.log("Результат пошуку (product):", product);
   // --- КІНЕЦЬ БЛОКУ ДЛЯ НАЛАГОДЖЕННЯ ---
 
 
   if (!product) {
-    // Якщо product тут undefined, ми побачимо це в логах
-    console.log("ПОМИЛКА: Продукт не знайдено. Повертаємо сторінку помилки.");
+    console.log("ПОМИЛКА: Продукт не знайдено.");
     return (
       <main className="flex min-h-screen flex-col items-center">
          <header className="w-full p-4 bg-blue-600 text-white shadow-md">
@@ -25,12 +28,12 @@ export default function ProductPage({ params }) {
             &larr; Назад до каталогу
           </a>
         </header>
-        <p className="p-10 text-center text-red-500">Товар не знайдено. (ID: {params.id})</p>
+        {/* ↓↓ ЗМІНА ТУТ: Показуємо 'params.slug' для налагодження ↓↓ */}
+        <p className="p-10 text-center text-red-500">Товар не знайдено. (SLUG: {params.slug})</p>
       </main>
     );
   }
 
-  // Якщо ми дійшли сюди, продукт знайдено
   console.log("УСПІХ: Продукт знайдено, малюємо сторінку.");
   return (
     <main className="flex min-h-screen flex-col items-center">
