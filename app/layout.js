@@ -2,17 +2,15 @@
 "use client"; 
 
 import { useState, useEffect } from 'react';
-// ↓↓ 1. Імпортуємо шрифт Inter ↓↓
 import { Inter } from 'next/font/google';
 import "./globals.css"; 
 import { CartProvider } from "../context/CartContext"; 
 import CookieBanner from '../components/CookieBanner'; 
 import Footer from '../components/Footer'; 
 
-// 2. Налаштовуємо шрифт
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
-  variable: '--font-inter', // Назва для CSS
+  variable: '--font-inter',
 });
 
 export default function RootLayout({ children }) {
@@ -31,11 +29,13 @@ export default function RootLayout({ children }) {
   };
   
   return (
-    // 3. Застосовуємо шрифт до всього сайту
-    <html lang="uk" className={inter.variable}>
+    <html lang="uk" className={`${inter.variable} font-sans`}>
       <head>
-        {/* 4. Змінюємо назву */}
         <title>spacia.ua</title>
+        
+        {/* ↓↓ КРИТИЧНО ВАЖЛИВИЙ ТЕГ ДЛЯ МОБІЛЬНОЇ ВЕРСІЇ ↓↓ */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>

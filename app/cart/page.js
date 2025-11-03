@@ -14,22 +14,25 @@ export default function CartPage() {
     <>
       <Header onSelectCategory={setSelectedCategory} />
       
-      <main className="container mx-auto px-6 py-12">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Ваш кошик</h1>
+      {/* ↓↓ Змінено відступи 'px-4' для мобільних ↓↓ */}
+      <main className="container mx-auto px-4 sm:px-6 py-12">
+        {/* ↓↓ Змінено розмір тексту 'text-2xl' для мобільних ↓↓ */}
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">Ваш кошик</h1>
         
         {items.length === 0 ? (
           <p className="text-gray-600">Ваш кошик порожній. <Link href="/" className="text-blue-600 hover:underline font-medium">Повернутися до магазину</Link></p>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             
             <div className="lg:col-span-2 flex flex-col gap-6">
               {items.map(item => (
-                <div key={item.id} className="flex gap-6 bg-white p-4 rounded-lg shadow-sm border items-center">
-                  <img src={item.image} alt={item.title} className="w-24 h-24 object-cover rounded-lg" />
+                <div key={item.id} className="flex gap-4 bg-white p-4 rounded-lg shadow-sm border items-center">
+                  <img src={item.image} alt={item.title} className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg" />
                   <div className="flex-grow">
-                    <h2 className="text-lg font-semibold text-gray-800">{item.title}</h2>
+                    <h2 className="text-base sm:text-lg font-semibold text-gray-800">{item.title}</h2>
                     <p className="text-gray-500 text-sm capitalize">{item.category}</p>
-                    <p className="text-lg font-bold text-gray-900 mt-1">${item.price} <span className="text-sm font-normal text-gray-500">x {item.quantity}</span></p>
+                    {/* ↓↓ ЗМІНА ВАЛЮТИ ТУТ ↓↓ */}
+                    <p className="text-lg font-bold text-gray-900 mt-1">${item.price.toFixed(2)} ₴ <span className="text-sm font-normal text-gray-500">x {item.quantity}</span></p>
                   </div>
                   <button 
                     onClick={() => removeFromCart(item.id)}
@@ -42,24 +45,26 @@ export default function CartPage() {
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm border h-fit">
-              <h2 className="text-2xl font-semibold mb-4 text-gray-900">Разом до оплати</h2>
-              <div className="flex justify-between text-lg mb-2 text-gray-700">
+              <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-gray-900">Разом до оплати</h2>
+              <div className="flex justify-between text-base sm:text-lg mb-2 text-gray-700">
                 <span>Проміжна сума:</span>
-                <span className="font-semibold">${getTotalPrice()}</span>
+                {/* ↓↓ ЗМІНА ВАЛЮТИ ТУТ ↓↓ */}
+                <span className="font-semibold">{getTotalPrice()} ₴</span>
               </div>
-              <div className="flex justify-between text-lg mb-4 text-gray-700">
+              <div className="flex justify-between text-base sm:text-lg mb-4 text-gray-700">
                 <span>Доставка:</span>
                 <span className="font-semibold">Безкоштовно</span>
               </div>
               <hr className="my-4" />
-              <div className="flex justify-between text-2xl font-bold text-gray-900 mb-6">
+              <div className="flex justify-between text-xl sm:text-2xl font-bold text-gray-900 mb-6">
                 <span>Всього:</span>
-                <span>${getTotalPrice()}</span>
+                {/* ↓↓ ЗМІНА ВАЛЮТИ ТУТ ↓↓ */}
+                <span>{getTotalPrice()} ₴</span>
               </div>
               
               <button 
-                className="w-full bg-blue-600 text-white p-3 rounded-lg text-lg font-bold hover:bg-blue-700 shadow-lg hover:shadow-blue-300"
-                disabled // Кнопка поки неактивна
+                className="w-full bg-blue-600 text-white p-3 rounded-lg text-lg font-bold hover:bg-blue-700 shadow-lg hover:shadow-blue-300 transition-all"
+                disabled
               >
                 Перейти до оплати
               </button>

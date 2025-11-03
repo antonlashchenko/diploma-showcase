@@ -11,18 +11,18 @@ export default function Header({ onSelectCategory }) {
 
   return (
     <header className="w-full bg-white shadow-sm sticky top-0 z-40 border-b border-gray-200">
-      <nav className="container mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-center">
-        {/* 1. Нова назва */}
+      {/* ↓↓ Змінено відступи 'px-4' для мобільних ↓↓ */}
+      <nav className="container mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row justify-between items-center">
         <Link href="/" className="text-2xl font-bold text-gray-900 mb-3 sm:mb-0">
           spacia<span className="text-blue-600">.</span>ua
         </Link>
         
-        <div className="flex flex-wrap justify-center gap-x-5 gap-y-2">
+        {/* ↓↓ Змінено відступи 'gap-x-4' для мобільних ↓↓ */}
+        <div className="flex flex-wrap justify-center gap-x-4 sm:gap-x-5 gap-y-2">
           {categories.map(category => (
             <button
               key={category}
               onClick={() => onSelectCategory(category)}
-              // 2. Оновлений, чистіший стиль кнопок
               className="text-gray-500 hover:text-blue-600 capitalize text-sm font-medium tracking-wide"
             >
               {category} 
