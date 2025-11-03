@@ -14,9 +14,7 @@ export default function CartPage() {
     <>
       <Header onSelectCategory={setSelectedCategory} />
       
-      {/* ↓↓ Змінено відступи 'px-4' для мобільних ↓↓ */}
       <main className="container mx-auto px-4 sm:px-6 py-12">
-        {/* ↓↓ Змінено розмір тексту 'text-2xl' для мобільних ↓↓ */}
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">Ваш кошик</h1>
         
         {items.length === 0 ? (
@@ -27,12 +25,20 @@ export default function CartPage() {
             <div className="lg:col-span-2 flex flex-col gap-6">
               {items.map(item => (
                 <div key={item.id} className="flex gap-4 bg-white p-4 rounded-lg shadow-sm border items-center">
-                  <img src={item.image} alt={item.title} className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg" />
+                  
+                  {/* ↓↓ ЗМІНА ТУТ ↓↓ */}
+                  {/* Змінили object-cover на object-contain */}
+                  <img 
+                    src={item.image} 
+                    alt={item.title} 
+                    className="w-20 h-20 sm:w-24 sm:h-24 object-contain rounded-lg p-2 bg-gray-100" 
+                  />
+                  {/* ↑↑ КІНЕЦЬ ЗМІНИ ↑↑ */}
+
                   <div className="flex-grow">
                     <h2 className="text-base sm:text-lg font-semibold text-gray-800">{item.title}</h2>
                     <p className="text-gray-500 text-sm capitalize">{item.category}</p>
-                    {/* ↓↓ ЗМІНА ВАЛЮТИ ТУТ ↓↓ */}
-                    <p className="text-lg font-bold text-gray-900 mt-1">${item.price.toFixed(2)} ₴ <span className="text-sm font-normal text-gray-500">x {item.quantity}</span></p>
+                    <p className="text-lg font-bold text-gray-900 mt-1">{item.price.toFixed(2)} ₴ <span className="text-sm font-normal text-gray-500">x {item.quantity}</span></p>
                   </div>
                   <button 
                     onClick={() => removeFromCart(item.id)}
@@ -48,7 +54,6 @@ export default function CartPage() {
               <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-gray-900">Разом до оплати</h2>
               <div className="flex justify-between text-base sm:text-lg mb-2 text-gray-700">
                 <span>Проміжна сума:</span>
-                {/* ↓↓ ЗМІНА ВАЛЮТИ ТУТ ↓↓ */}
                 <span className="font-semibold">{getTotalPrice()} ₴</span>
               </div>
               <div className="flex justify-between text-base sm:text-lg mb-4 text-gray-700">
@@ -58,7 +63,6 @@ export default function CartPage() {
               <hr className="my-4" />
               <div className="flex justify-between text-xl sm:text-2xl font-bold text-gray-900 mb-6">
                 <span>Всього:</span>
-                {/* ↓↓ ЗМІНА ВАЛЮТИ ТУТ ↓↓ */}
                 <span>{getTotalPrice()} ₴</span>
               </div>
               

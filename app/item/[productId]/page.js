@@ -32,14 +32,21 @@ export default function ProductPage() {
     <>
       <Header onSelectCategory={setSelectedCategory} />
       
-      {/* ↓↓ Змінено відступи 'px-4' для мобільних ↓↓ */}
       <main className="container mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start max-w-6xl mx-auto">
           
           <div className="flex flex-col gap-6">
-            <div className="bg-white rounded-lg shadow-lg border overflow-hidden">
-              <img src={product.image} alt={product.title} className="w-full h-auto object-cover" />
+            {/* ↓↓ ЗМІНА ТUT ↓↓ */}
+            {/* Змінили object-cover на object-contain і додали padding */}
+            <div className="bg-white rounded-lg shadow-lg border overflow-hidden p-6">
+              <img 
+                src={product.image} 
+                alt={product.title} 
+                className="w-full h-auto max-h-[500px] object-contain" 
+              />
             </div>
+            {/* ↑↑ КІНЕЦЬ ЗМІНИ ↑↑ */}
+
             {showAR && (
               <ARViewer modelSrc={modelSrc} />
             )}
@@ -47,9 +54,7 @@ export default function ProductPage() {
           
           <div className="flex flex-col">
             <p className="text-blue-600 font-semibold mb-2 capitalize">{product.category}</p>
-            {/* ↓↓ Змінено розмір тексту 'text-3xl' для мобільних ↓↓ */}
             <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{product.title}</h1>
-            {/* ↓↓ ЗМІНА ВАЛЮТИ ТУТ + розмір тексту ↓↓ */}
             <p className="text-3xl sm:text-4xl font-light text-gray-800 mb-6">{product.price.toFixed(2)} ₴</p>
             
             <h2 className="text-xl font-semibold text-gray-900 mb-2">Опис</h2>

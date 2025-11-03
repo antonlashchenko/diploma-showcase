@@ -19,9 +19,7 @@ export default function Home() {
     <>
       <Header onSelectCategory={setSelectedCategory} />
       
-      {/* ↓↓ Змінено відступи 'px-4' для мобільних ↓↓ */}
       <main className="container mx-auto px-4 sm:px-6 py-12">
-        {/* ↓↓ Змінено розмір тексту 'text-2xl' для мобільних ↓↓ */}
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">
           {selectedCategory}
         </h2>
@@ -29,14 +27,21 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {filteredProducts.map((product) => (
             <div key={product.id} className="bg-white rounded-lg shadow-sm overflow-hidden flex flex-col transition-all duration-300 ease-in-out hover:shadow-xl group">
-              <div className="overflow-hidden h-48">
-                <img src={product.image} alt={product.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+              
+              {/* ↓↓ ЗМІНА ТУТ ↓↓ */}
+              {/* Змінили object-cover на object-contain, щоб бачити все фото */}
+              <div className="h-48 w-full flex items-center justify-center p-4">
+                <img 
+                  src={product.image} 
+                  alt={product.title} 
+                  className="h-full w-full object-contain" 
+                />
               </div>
+              {/* ↑↑ КІНЕЦЬ ЗМІНИ ↑↑ */}
               
               <div className="p-5 flex flex-col flex-grow">
                 <h3 className="text-lg font-semibold text-gray-800 truncate">{product.title}</h3>
                 <p className="text-gray-500 text-sm capitalize">{product.category}</p>
-                {/* ↓↓ ЗМІНА ВАЛЮТИ ТУТ ↓↓ */}
                 <p className="text-xl font-bold text-gray-900 mt-2 mb-4">{product.price.toFixed(2)} ₴</p>
                 
                 <Link 
