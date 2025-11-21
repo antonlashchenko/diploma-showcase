@@ -38,10 +38,9 @@ export default function Home() {
             >
               <div className="h-48 w-full flex items-center justify-center p-4">
                 <img 
-                  src={product.image} 
+                  src={product.images ? product.images[0] : "/placeholder.png"} 
                   alt={product.title} 
-                  className="h-full w-full object-contain" 
-                  onError={(e) => { e.target.src = 'https://placehold.co/600x400/eeeeee/aaaaaa?text=No+Image'; }}
+                  className="h-48 w-full object-contain p-4"
                 />
               </div>
               

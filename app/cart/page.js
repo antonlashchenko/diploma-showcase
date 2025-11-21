@@ -29,9 +29,9 @@ export default function CartPage() {
                   {/* ↓↓ ЗМІНА ТУТ ↓↓ */}
                   {/* Змінили object-cover на object-contain */}
                   <img 
-                    src={item.image} 
-                    alt={item.title} 
-                    className="w-20 h-20 sm:w-24 sm:h-24 object-contain rounded-lg p-2 bg-gray-100" 
+                    src={item.images ? item.images[0] : "/placeholder.png"} 
+                    alt={item.title}
+                    className="w-24 h-24 object-contain rounded"
                   />
                   {/* ↑↑ КІНЕЦЬ ЗМІНИ ↑↑ */}
 
