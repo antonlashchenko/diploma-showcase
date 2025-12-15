@@ -13,7 +13,7 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative container mx-auto px-4 sm:px-6 py-20 md:py-0 h-full flex items-center">
         <div className="max-w-2xl text-white">
-          <h1 className="text-3xl md:text-6xl font-bold mb-6 md:mb-10 pb-2 md:pb-4 leading-relaxed md:leading-relaxed">
+          <h1 className="text-3xl md:text-6xl font-bold mb-6 md:mb-10 pb-2 md:pb-4 leading-relaxed md:leading-tight">
             Створіть затишок
             <span className="block bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent pb-1 md:pb-2">
               у вашому просторі
