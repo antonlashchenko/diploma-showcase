@@ -15,7 +15,7 @@ export default function HeroSection() {
         <div className="max-w-2xl text-white">
           <h1 className="text-3xl md:text-6xl font-bold mb-6 md:mb-10 pb-2 md:pb-4 leading-relaxed md:leading-tight">
             Створіть затишок
-            <span className="block bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent pb-1 md:pb-2">
+            <span className="block bg-gradient-to-r from-yellow-200 to-white bg-clip-text text-transparent pb-1 md:pb-2">
               у вашому просторі
             </span>
           </h1>
