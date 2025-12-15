@@ -8,7 +8,7 @@ export default function HeroSection() {
     <section className="relative h-[500px] md:h-[600px] overflow-hidden">
       {/* Background Image with Overlay */}
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-900 via-blue-900 to-cyan-900"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-600/90 via-blue-500/90 to-cyan-500/90"></div>
 
       {/* Content */}
       <div className="relative container mx-auto px-4 sm:px-6 h-full flex items-center">
