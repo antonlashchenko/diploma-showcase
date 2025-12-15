@@ -4,24 +4,24 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from '../context/CartContext';
-import { getCategories } from '../lib/data';
+import { getCategories, getSlugByCategory } from '../lib/data';
 
 export default function Header({ onSelectCategory }) {
   const { itemCount } = useCart();
   const categories = getCategories(); // Тепер тут НЕМАЄ "Всі"
-  
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleCategoryClick = (category) => {
     // Якщо ми на головній сторінці, ми просто оновлюємо стан
     if (onSelectCategory) {
       onSelectCategory(category);
-    } 
+    }
     // Якщо ми на іншій сторінці (де onSelectCategory = null),
     // цей клік просто закриє меню. Користувач має натиснути на логотип,
     // щоб повернутися на головну та активувати фільтрацію.
     // Це найпростіша і найнадійніша логіка.
-    
+
     setIsMenuOpen(false); // Закриваємо меню в будь-якому випадку
   };
 
@@ -30,7 +30,7 @@ export default function Header({ onSelectCategory }) {
       <header className="w-full bg-white shadow-sm sticky top-0 z-40 border-b border-gray-200">
         {/* ↓↓ ПОВНІСТЮ ОНОВЛЕНА СТРУКТУРА NAV ↓↓ */}
         <nav className="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-          
+
           {/* 1. ЛІВА ЧАСТИНА (Гамбургер) */}
           <div className="flex-1 flex justify-start">
             <button
@@ -50,7 +50,7 @@ export default function Header({ onSelectCategory }) {
               spacia<span className="text-blue-600">.</span>ua
             </Link>
           </div>
-          
+
           {/* 3. ПРАВА ЧАСТИНА (Кошик) */}
           <div className="flex-1 flex justify-end">
             <Link href="/cart" className="relative">
@@ -68,21 +68,21 @@ export default function Header({ onSelectCategory }) {
       </header>
 
       {/* ↓↓ МЕНЮ ГАМБУРГЕР (Тепер працює на всіх пристроях) ↓↓ */}
-      
+
       {/* Затемнення фону */}
       {isMenuOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/30 z-40"
           onClick={() => setIsMenuOpen(false)}
         ></div>
       )}
-      
+
       {/* Саме меню */}
-      <div 
+      <div
         className={`fixed top-0 left-0 w-3/4 max-w-sm h-full bg-white shadow-xl z-50 transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out`}
       >
         <div className="p-4">
-          <button 
+          <button
             onClick={() => setIsMenuOpen(false)}
             className="text-gray-500 hover:text-gray-800"
             aria-label="Закрити меню"
@@ -91,17 +91,21 @@ export default function Header({ onSelectCategory }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
-          
+
           <nav className="mt-8 flex flex-col gap-2">
-            {categories.map(category => (
-              <button
-                key={category}
-                onClick={() => handleCategoryClick(category)}
-                className="text-gray-800 hover:bg-blue-50 capitalize text-lg font-medium p-3 rounded-lg text-left"
-              >
-                {category} 
-              </button>
-            ))}
+            {categories.map(category => {
+              const slug = getSlugByCategory(category);
+              return (
+                <Link
+                  key={category}
+                  href={`/category/${slug}`}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-gray-800 hover:bg-blue-50 capitalize text-lg font-medium p-3 rounded-lg text-left block"
+                >
+                  {category}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       </div>

@@ -6,6 +6,8 @@ import {
   SofaIcon,
   OfficeIcon
 } from './CategoryIcons';
+import Link from 'next/link';
+import { getSlugByCategory } from '@/lib/data';
 
 const categories = [
   {
@@ -64,10 +66,10 @@ export default function CategoryShowcase({ onSelectCategory }) {
           {categories.map((category) => {
             const IconComponent = category.icon;
             return (
-              <button
+              <Link
                 key={category.name}
-                onClick={() => handleCategoryClick(category.name)}
-                className="group relative bg-white rounded-2xl p-8 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer"
+                href={`/category/${getSlugByCategory(category.name)}`}
+                className="group relative bg-white rounded-2xl p-8 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer block"
               >
                 {/* Gradient Background on Hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
@@ -87,7 +89,7 @@ export default function CategoryShowcase({ onSelectCategory }) {
                     Переглянути →
                   </span>
                 </div>
-              </button>
+              </Link>
             );
           })}
         </div>

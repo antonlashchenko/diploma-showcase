@@ -52,3 +52,21 @@ export async function getProductsWithImages() {
 
   return productsWithImages;
 }
+
+// 3. Функція для отримання товарів певної категорії з картинками
+import { getProductsByCategorySlug } from '@/lib/data';
+
+export async function getCategoryProductsWithImages(slug) {
+  const products = getProductsByCategorySlug(slug);
+
+  const productsWithImages = await Promise.all(products.map(async (product) => {
+    const images = await getProductImages(product.id);
+    return {
+      ...product,
+      images: images,
+      mainImage: images.length > 0 ? images[0] : "/placeholder.png"
+    };
+  }));
+
+  return productsWithImages;
+}
