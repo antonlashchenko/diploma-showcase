@@ -1,23 +1,14 @@
 "use client";
 
 import Link from 'next/link';
-import Image from 'next/image';
+import Link from 'next/link';
 
 export default function HeroSection() {
   return (
     <section className="relative h-[500px] md:h-[600px] overflow-hidden">
       {/* Background Image with Overlay */}
-      <div className="absolute inset-0">
-        <Image
-          src="/hero-banner-new.png"
-          alt="Сучасні офісні меблі"
-          fill
-          className="object-cover"
-          priority
-        />
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/80 via-blue-900/70 to-cyan-900/60"></div>
-      </div>
+      {/* Background Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-900 via-blue-900 to-cyan-900"></div>
 
       {/* Content */}
       <div className="relative container mx-auto px-4 sm:px-6 h-full flex items-center">
