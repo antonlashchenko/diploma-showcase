@@ -1,11 +1,10 @@
 "use client";
 
-import Link from 'next/link';
-import { 
-  ChairIcon, 
-  TableIcon, 
-  SofaIcon, 
-  OfficeIcon 
+import {
+  ChairIcon,
+  TableIcon,
+  SofaIcon,
+  OfficeIcon
 } from './CategoryIcons';
 
 const categories = [
@@ -35,7 +34,20 @@ const categories = [
   }
 ];
 
-export default function CategoryShowcase() {
+export default function CategoryShowcase({ onSelectCategory }) {
+  const handleCategoryClick = (categoryName) => {
+    // Встановлюємо фільтр категорії
+    if (onSelectCategory) {
+      onSelectCategory(categoryName);
+    }
+
+    // Скролимо до секції всіх товарів
+    const allProductsSection = document.getElementById('all-products');
+    if (allProductsSection) {
+      allProductsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <section id="categories" className="py-16 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4 sm:px-6">
@@ -52,14 +64,14 @@ export default function CategoryShowcase() {
           {categories.map((category) => {
             const IconComponent = category.icon;
             return (
-              <Link
+              <button
                 key={category.name}
-                href={`/?category=${encodeURIComponent(category.name)}`}
-                className="group relative bg-white rounded-2xl p-8 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden"
+                onClick={() => handleCategoryClick(category.name)}
+                className="group relative bg-white rounded-2xl p-8 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer"
               >
                 {/* Gradient Background on Hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
-                
+
                 {/* Content */}
                 <div className="relative z-10 flex flex-col items-center text-center">
                   <div className={`w-16 h-16 mb-4 rounded-full bg-gradient-to-br ${category.color} p-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
@@ -75,7 +87,7 @@ export default function CategoryShowcase() {
                     Переглянути →
                   </span>
                 </div>
-              </Link>
+              </button>
             );
           })}
         </div>

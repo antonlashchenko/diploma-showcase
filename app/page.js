@@ -30,6 +30,23 @@ export default function Home() {
     loadData();
   }, []);
 
+  // Перевіряємо sessionStorage для категорії (коли приходимо зі сторінки товару)
+  useEffect(() => {
+    const savedCategory = sessionStorage.getItem('selectedCategory');
+    if (savedCategory) {
+      setSelectedCategory(savedCategory);
+      sessionStorage.removeItem('selectedCategory'); // Очищаємо після використання
+
+      // Скролимо до секції товарів після завантаження
+      setTimeout(() => {
+        const allProductsSection = document.getElementById('all-products');
+        if (allProductsSection) {
+          allProductsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  }, []);
+
   const filteredProducts = selectedCategory
     ? products.filter(p => p.category === selectedCategory)
     : products;
@@ -42,7 +59,7 @@ export default function Home() {
       <HeroSection />
 
       {/* Category Showcase */}
-      <CategoryShowcase />
+      <CategoryShowcase onSelectCategory={setSelectedCategory} />
 
       {/* Featured Products */}
       {!loading && <FeaturedProducts products={products} />}
