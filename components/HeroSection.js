@@ -25,16 +25,16 @@ export default function HeroSection() {
           </p>
           <div className="flex flex-wrap gap-4">
             <Link
-              href="#featured"
+              href="#categories"
               className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
             >
-              Переглянути каталог
+              Категорії
             </Link>
             <Link
-              href="#categories"
+              href="/products"
               className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 border border-white/30"
             >
-              Категорії
+              Всі товари
             </Link>
           </div>
         </div>

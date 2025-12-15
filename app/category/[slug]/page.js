@@ -3,6 +3,7 @@ import { getCategoryBySlug, categorySlugs } from '@/lib/data';
 import Header from '@/components/Header';
 import PromoBanner from '@/components/PromoBanner';
 import ProductCard from '@/components/ProductCard';
+import ProductFilter from '@/components/ProductFilter';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -39,23 +40,11 @@ export default async function CategoryPage({ params }) {
                     </Link>
                 </div>
 
-                {products.length === 0 ? (
-                    <div className="text-center py-10">
-                        <p className="text-gray-600 text-lg">В цій категорії поки немає товарів.</p>
-                        <Link
-                            href="/"
-                            className="mt-4 inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
-                        >
-                            Переглянути інші товари
-                        </Link>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {products.map((product) => (
-                            <ProductCard key={product.id} product={product} />
-                        ))}
-                    </div>
-                )}
+                <ProductFilter
+                    initialProducts={products}
+                    showCategoryFilter={false}
+                    initialCategory={categoryName}
+                />
             </main>
 
             <PromoBanner />
