@@ -1,13 +1,19 @@
 import { getCategoryProductsWithImages } from '@/app/actions';
-import { getCategoryBySlug } from '@/lib/data';
+import { getCategoryBySlug, categorySlugs } from '@/lib/data';
 import Header from '@/components/Header';
 import PromoBanner from '@/components/PromoBanner';
 import ProductCard from '@/components/ProductCard';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+export async function generateStaticParams() {
+    return Object.values(categorySlugs).map((slug) => ({
+        slug: slug,
+    }));
+}
+
 export default async function CategoryPage({ params }) {
-    const { slug } = params;
+    const { slug } = await params;
     const categoryName = getCategoryBySlug(slug);
 
     if (!categoryName) {
