@@ -7,7 +7,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 export default function CartPage() {
-  const { items, removeFromCart, getTotalPrice } = useCart();
+  const { items, removeFromCart, updateQuantity, getTotalPrice } = useCart();
   const [_, setSelectedCategory] = useState("Всі");
 
   return (
@@ -38,7 +38,24 @@ export default function CartPage() {
                   <div className="flex-grow">
                     <h2 className="text-base sm:text-lg font-semibold text-gray-800">{item.title}</h2>
                     <p className="text-gray-500 text-sm capitalize">{item.category}</p>
-                    <p className="text-lg font-bold text-gray-900 mt-1">{item.price.toFixed(2)} ₴ <span className="text-sm font-normal text-gray-500">x {item.quantity}</span></p>
+                    <div className="flex items-center gap-3 mt-2">
+                      <div className="flex items-center border border-gray-300 rounded-lg">
+                        <button
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-lg"
+                        >
+                          -
+                        </button>
+                        <span className="px-2 font-medium text-gray-900 min-w-[30px] text-center">{item.quantity}</span>
+                        <button
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-lg"
+                        >
+                          +
+                        </button>
+                      </div>
+                      <p className="text-lg font-bold text-gray-900 ml-2">{(item.price * item.quantity).toFixed(2)} ₴</p>
+                    </div>
                   </div>
                   <button
                     onClick={() => removeFromCart(item.id)}

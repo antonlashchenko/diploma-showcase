@@ -21,7 +21,7 @@ export function CartProvider({ children }) {
       // Якщо немає - додаємо
       return [...prevItems, { ...product, quantity: 1 }];
     });
-    
+
     // alert(`${product.title} додано в кошик!`); // <-- Я ВИДАЛИВ ЦЕЙ РЯДОК
   };
 
@@ -29,17 +29,26 @@ export function CartProvider({ children }) {
     setItems(prevItems => prevItems.filter(item => item.id !== productId));
   };
 
+  const updateQuantity = (productId, newQuantity) => {
+    if (newQuantity < 1) return; // Не дозволяємо менше 1 (для видалення є хрестик)
+
+    setItems(prevItems => prevItems.map(item =>
+      item.id === productId ? { ...item, quantity: newQuantity } : item
+    ));
+  };
+
   const getTotalPrice = () => {
     return items.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   };
-  
+
   return (
-    <CartContext.Provider value={{ 
-        items, 
-        addToCart, 
-        removeFromCart, 
-        getTotalPrice, 
-        itemCount: items.reduce((total, item) => total + item.quantity, 0)
+    <CartContext.Provider value={{
+      items,
+      addToCart,
+      removeFromCart,
+      updateQuantity,
+      getTotalPrice,
+      itemCount: items.reduce((total, item) => total + item.quantity, 0)
     }}>
       {children}
     </CartContext.Provider>
