@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import Link from 'next/link';
+
 
 export default function HeroSection() {
   return (
