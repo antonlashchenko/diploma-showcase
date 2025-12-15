@@ -9,7 +9,7 @@ export default function HeroSection() {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <Image
-          src="/hero-banner.png"
+          src="/hero-banner-new.png"
           alt="Сучасні офісні меблі"
           fill
           className="object-cover"
