@@ -63,7 +63,7 @@ export default function FeaturedProducts({ products }) {
                 {/* View All Button */}
                 <div className="text-center mt-12">
                     <Link
-                        href="/#all-products"
+                        href="/products"
                         className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-4 rounded-lg font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                     >
                         Переглянути всі товари

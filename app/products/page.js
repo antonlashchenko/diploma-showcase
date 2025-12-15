@@ -1,10 +1,10 @@
 import Header from '@/components/Header';
 import PromoBanner from '@/components/PromoBanner';
 import ProductFilter from '@/components/ProductFilter';
-import { getAllProducts } from '@/lib/data';
+import { getProductsWithImages } from '../actions';
 
-export default function AllProductsPage() {
-    const products = getAllProducts();
+export default async function AllProductsPage() {
+    const products = await getProductsWithImages();
 
     return (
         <>
