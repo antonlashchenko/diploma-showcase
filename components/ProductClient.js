@@ -65,7 +65,7 @@ export default function ProductClient({ product, initialImages }) {
             <p className="text-gray-600 leading-relaxed mb-8">{product.description}</p>
 
             <button
-              onClick={() => addToCart({ ...product, image: mainImageForCart })}
+              onClick={() => addToCart({ ...product, images: initialImages })}
               className="w-full bg-blue-600 text-white p-4 rounded-lg text-base font-bold hover:bg-blue-700 shadow-lg hover:shadow-blue-300 transition-all"
             >
               Додати в кошик
