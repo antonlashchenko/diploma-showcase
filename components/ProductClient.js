@@ -62,7 +62,7 @@ export default function ProductClient({ product, initialImages }) {
             <p className="text-3xl sm:text-4xl font-light text-gray-800 mb-6">{product.price.toFixed(2)} ₴</p>
 
             <h2 className="text-xl font-semibold text-gray-900 mb-2">Опис</h2>
-            <p className="text-gray-600 leading-relaxed mb-8">{product.description}</p>
+            <p className="text-gray-600 leading-relaxed mb-8 whitespace-pre-line">{product.description}</p>
 
             <button
               onClick={() => addToCart({ ...product, images: initialImages })}
