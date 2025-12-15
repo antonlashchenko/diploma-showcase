@@ -5,7 +5,7 @@ export default function PromoBanner() {
         {
             icon: "🚚",
             title: "Безкоштовна доставка",
-            description: "При замовленні від 10,000 ₴"
+            description: "При замовленні від 15,000 ₴"
         },
         {
             icon: "📱",

@@ -70,19 +70,38 @@ export default function CartPage() {
             {/* Checkout Section */}
             <div className="bg-white p-6 rounded-lg shadow-sm border h-fit">
               <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-gray-900">Разом до оплати</h2>
-              <div className="flex justify-between text-base sm:text-lg mb-2 text-gray-700">
-                <span>Проміжна сума:</span>
-                <span className="font-semibold">{getTotalPrice()} ₴</span>
-              </div>
-              <div className="flex justify-between text-base sm:text-lg mb-4 text-gray-700">
-                <span>Доставка:</span>
-                <span className="font-semibold">Безкоштовно</span>
-              </div>
-              <hr className="my-4" />
-              <div className="flex justify-between text-xl sm:text-2xl font-bold text-gray-900 mb-6">
-                <span>Всього:</span>
-                <span>{getTotalPrice()} ₴</span>
-              </div>
+              {(() => {
+                const subtotal = parseFloat(getTotalPrice());
+                const shippingCost = subtotal >= 15000 ? 0 : 500;
+                const total = subtotal + shippingCost;
+
+                return (
+                  <>
+                    <div className="flex justify-between text-base sm:text-lg mb-2 text-gray-700">
+                      <span>Проміжна сума:</span>
+                      <span className="font-semibold">{subtotal.toFixed(2)} ₴</span>
+                    </div>
+                    <div className="flex justify-between text-base sm:text-lg mb-4 text-gray-700">
+                      <span>Доставка:</span>
+                      <span className={shippingCost === 0 ? "text-green-600 font-semibold" : "font-semibold"}>
+                        {shippingCost === 0 ? "Безкоштовно" : `${shippingCost.toFixed(2)} ₴`}
+                      </span>
+                    </div>
+
+                    {shippingCost > 0 && (
+                      <p className="text-sm text-blue-600 mb-4 bg-blue-50 p-2 rounded">
+                        Додайте товарів ще на {(15000 - subtotal).toFixed(2)} ₴ для безкоштовної доставки!
+                      </p>
+                    )}
+
+                    <hr className="my-4" />
+                    <div className="flex justify-between text-xl sm:text-2xl font-bold text-gray-900 mb-6">
+                      <span>Всього:</span>
+                      <span>{total.toFixed(2)} ₴</span>
+                    </div>
+                  </>
+                );
+              })()}
 
               <button
                 className="w-full bg-blue-600 text-white p-3 rounded-lg text-lg font-bold hover:bg-blue-700 shadow-lg hover:shadow-blue-300 transition-all"
