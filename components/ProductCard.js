@@ -6,13 +6,12 @@ export default function ProductCard({ product }) {
             href={`/item/${product.id}`}
             className="group bg-white rounded-xl shadow-md overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
         >
-            <div className="relative h-56 w-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center overflow-hidden">
+            <div className="relative h-56 w-full bg-white flex items-center justify-center overflow-hidden">
                 <img
                     src={product.mainImage}
                     alt={product.title}
                     className="h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
 
             <div className="p-5 flex flex-col flex-grow">
