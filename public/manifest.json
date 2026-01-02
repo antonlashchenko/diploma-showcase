@@ -1,11 +1,11 @@
 {
-  "name": "E-commerce Showcase",
-  "short_name": "E-Showcase",
+  "name": "spacia.ua",
+  "short_name": "spacia",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#007bff",
-  "description": "Демонстрація трендів е-комерції",
+  "description": "Створіть затишок у вашому просторі",
   "icons": [
     {
       "src": "/icon-192.png",
